@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizHive - Result</title>
+
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="result.css">
+</head>
+
+<body>
+
+    ]
+    <nav class="navbar">
+        <a href="categories.html" class="back-btn">← Back</a>
+    </nav>
+
+    <main class="result-wrapper">
+
+        <div class="result-container" data-aos="zoom-in">
+
+            <h2 data-aos="fade-up">Category:</h2>
+            <h2 id="category_text" data-aos="fade-up" data-aos-delay="100"></h2>
+
+            <h1 data-aos="fade-up" data-aos-delay="200">🎯 Your Score</h1>
+
+            <p class="score" id="scoreText" data-aos="zoom-in" data-aos-delay="300"></p>
+
+            <a href="categories.html" class="cta" data-aos="fade-up" data-aos-delay="400">
+                Play Again →
+            </a>
+
+        </div>
+
+    </main>
+
+   
+    <footer class="footer">
+        <p>© 2026 QuizHive • Keep learning ⚡</p>
+    </footer>
+
+    
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const score = params.get('score');
+        let category = params.get('category');
+
+        if (category == "sport") category = "Sports";
+        else if (category == "pop") category = "Pop Culture";
+        else if (category == "smart") category = "Everyday Smart";
+
+        document.getElementById("scoreText").innerText = `${score} / 8`;
+        document.getElementById("category_text").innerText = category;
+    </script>
+
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizHive - Categories</title>
+
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="category.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="back-btn">← Back</a>
+        <div id="space_it">
+            <a href="about.html" class="btn-nav">About</a>
+        
+            <a href="leaderboard.html" class="btn-nav">Leaderboard</a>
+        </div>
+    </nav>
+
+    <main class="categories">
+
+        <header class="header">
+            <h1 data-aos="fade-up">What do you want to explore...??</h1>
+
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="100">
+                <i>Choose a category and start your journey 🚀</i>
+            </p>
+        </header>
+
+        <div class="stats" data-aos="fade-up" data-aos-delay="200">
+            <div> 500+ Questions</div>
+            <div> Avg Time: 2 min</div>
+        </div>
+
+        <section class="card-outer">
+
+            <a href="quiz.html?category=pop" class="card card-pop" data-aos="fade-up">
+                <img src="./project_img/karan_img.jpeg">
+                <div class="card-content">
+                    <h2>🎬 Pop Culture</h2>
+                    <p>Movies, songs & trends</p>
+                </div>
+            </a>
+
+            <a href="quiz.html?category=smart" class="card card-smart" data-aos="fade-up" data-aos-delay="100">
+                <img src="./project_img/eps.webp">
+                <div class="card-content">
+                    <h2>🧠 Everyday Smart</h2>
+                    <p>Facts & current affairs</p>
+                </div>
+            </a>
+
+            <a href="quiz.html?category=sport" class="card card-sport" data-aos="fade-up" data-aos-delay="200">
+                <img src="./project_img/kobe_img.webp">
+                <div class="card-content">
+                    <h2>🏀 Sports</h2>
+                    <p>Games & players</p>
+                </div>
+            </a>
+
+            <a href="quiz.html?category=personality" class="card card-personality" data-aos="fade-up" data-aos-delay="300">
+                <img src="./project_img/personlity.jpeg">
+                <div class="card-content">
+                    <h2>👤 Personality</h2>
+                    <p>Discover yourself</p>
+                </div>
+            </a>
+
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 QuizHive • Built with curiosity ⚡</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+
+</body>
+</html>

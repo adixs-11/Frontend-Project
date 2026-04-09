@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizHive - Quiz</title>
+
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="quiz.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="categories.html" class="back-btn">← Back</a>
+        <div id="score"></div>
+    </nav>
+
+    <div class="container" data-aos="fade-up">
+
+        <h1 id="categoryTitle"></h1>
+
+        <p id="progressText"></p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+
+        <h2 id="question"></h2>
+
+        <div id="options"></div>
+
+        <button id="nextBtn" onclick="nextQuestion()">Next →</button>
+
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 QuizHive • Stay curious ⚡</p>
+    </footer>
+
+    <script src="quiz.js"></script>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+    <script>
+        AOS.init({ duration: 800, once: true });
+    </script>
+
+</body>
+</html>
