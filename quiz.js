@@ -564,9 +564,10 @@ function loadQuestion(){
 function nextQuestion(){
     currentQ++;
     if(currentQ >= 8){
-        location.href = `result.html?score=${score}&category=${category}`;
+      location.href = `result.html?score=${score}&category=${category}`;
+      
     } else {
-        loadQuestion();
+      loadQuestion();
     }
 }
 

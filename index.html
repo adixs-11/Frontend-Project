@@ -2,87 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>NoBrainer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive</title>
 
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sekuya&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="/project_img/video1.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="page">
   <nav class="navbar">
-    <h2>QuizHive</h2>
-    <div id="center_it">
-      <a href="about.html" class="btn-nav">About</a>
-      <a href="leaderboard.html" class="btn-nav">Leaderboard</a>
-      <a href="categories.html" class="btn-nav">Play</a>
-      <select class="btn-nav" onchange="toggleTheme(this.value)">
-        <option value="dark" >Dark Theme</option>
-        <option value="light" >Light Theme</option>
+    <h2 class="logo">QuizHive</h2>
+
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="categories.html">Play</a>
+
+      <select id="themeToggle" >
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
       </select>
+      
     </div>
   </nav>
 
-  <section class="hero">
-    <h1 data-aos="fade-up">
-      Learn. Play. Repeat.
-    </h1>
 
-    <p data-aos="fade-up" data-aos-delay="100">
-      Quizzes that actually feel fun — not like homework.
-    </p>
+  <section class="main">
+    <h1>Learn. Play. Repeat.</h1>
+    <h3><i>Quizzes that actually feel fun — not like homework.</i></h3>
 
-    <a href="categories.html" class="cta" data-aos="zoom-in" data-aos-delay="200">
-      Start Quiz →
+    <a href="categories.html" class="cta">
+      Start Quiz 
     </a>
   </section>
 
   <section class="features">
-
-    <div class="feature" data-aos="fade-up">
-      <h3> Fast Quizzes</h3>
+  
+  <div class="card ">
+    <div class="content">
+      <h3>Fast Quizzes</h3>
       <p>8 questions. No time waste.</p>
     </div>
+  </div>
 
-    <div class="feature" data-aos="fade-up" data-aos-delay="100">
-      <h3> Learn While Playing</h3>
+  <div class="card ">
+    <div class="content">
+      <h3>Learn While Playing</h3>
       <p>Every question has a fun fact.</p>
     </div>
+  </div>
 
-    <div class="feature" data-aos="fade-up" data-aos-delay="200">
-      <h3> Instant Results</h3>
+  <div class="card ">
+    <div class="content">
+      <h3>Instant Results</h3>
       <p>Know your score immediately.</p>
     </div>
+  </div>
 
   </section>
 
-  <section class="cta-section" data-aos="fade-up">
-    <h2>Know More</h2>
-    <a href="about.html" class="cta">About US →</a>
+  <section class="cta-section">
+    <h2><i>Know More</i></h2>
+    <a href="about.html" class="cta">About Us </a>
   </section>
 
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <footer class="footer">
+    <p>© 2026 QuizHive • Learn with fun </p>
+  </footer>
+
+  </div>
+
   <script>
-    AOS.init({ duration: 800, once: true });
-
-    function toggleTheme(theme){
-      const root = document.documentElement;
-      console.log(root)
-      if (theme === "light"){
-        root.style.setProperty("--text", "#0d1f1a")
-        root.style.setProperty("--bg", "#f2f4f0")
-        root.style.setProperty("--card", "#e8ece4")
-        root.style.setProperty("--border", "#c2ccc0")
-        root.style.setProperty("--muted","#4a6358")
-      } else {
-        root.style.setProperty("--text", "#f1f5f9")
-        root.style.setProperty("--bg", " #0f172a")
-        root.style.setProperty("--card", "#1e293b")
-        root.style.setProperty("--border", "rgba(255,255,255,0.08)")
-        root.style.setProperty("--muted","#94a3b8")
-      }
-    }  
 
   </script>
 
