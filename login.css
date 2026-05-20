@@ -1,7 +1,3 @@
-/* ── login.css ─────────────────────────────────────────────────────────────
-   Matches QuizHive's existing CSS variable system perfectly.
-   No existing files were modified.
-──────────────────────────────────────────────────────────────────────────── */
 
 :root {
   --bg:             #111110;
@@ -55,7 +51,6 @@ h1, h2, h3, .logo-center, .footer-logo {
   font-weight: 700;
 }
 
-/* ── Noise overlay ──────────────────────────────────── */
 .noise {
   pointer-events: none;
   position: fixed;
@@ -79,7 +74,6 @@ body.light::after {
   opacity: 0.04;
 }
 
-/* ── Navbar (identical to other pages) ──────────────── */
 .navbar {
   position: sticky;
   top: 0;
@@ -145,7 +139,6 @@ body.light .back-btn:hover { color: #1C2B3A; }
 .btn-nav:hover { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
 body.light .btn-nav:hover { background: #1C2B3A; color: #F4F2EE; border-color: #1C2B3A; }
 
-/* ── Main wrapper ─────────────────────────────────── */
 .login-wrapper {
   flex: 1;
   position: relative;
@@ -156,7 +149,6 @@ body.light .btn-nav:hover { background: #1C2B3A; color: #F4F2EE; border-color: #
   padding: 56px 20px 48px;
 }
 
-/* ── Card ─────────────────────────────────────────── */
 .login-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -186,7 +178,6 @@ body.light .btn-nav:hover { background: #1C2B3A; color: #F4F2EE; border-color: #
 body.light .login-card { box-shadow: 0 16px 48px rgba(28,43,58,0.1); }
 body.light .login-card::before { background: #1C2B3A; }
 
-/* ── Card header ──────────────────────────────────── */
 .card-header {
   text-align: center;
   margin-bottom: 28px;
@@ -224,7 +215,6 @@ body.light .eyebrow { color: #7A96AA; }
 .card-header h1 em { font-style: italic; color: var(--accent); }
 body.light .card-header h1 em { color: #2C4258; }
 
-/* ── Tab row ──────────────────────────────────────── */
 .tab-row {
   display: flex;
   border: 1px solid var(--border);
@@ -256,7 +246,6 @@ body.light .card-header h1 em { color: #2C4258; }
 body.light .tab.active { background: #1C2B3A; color: #F4F2EE; }
 .tab:not(.active):hover { color: var(--text-body); background: var(--bg-surface); }
 
-/* ── Form panels ──────────────────────────────────── */
 .form-panel { animation: panel-in 0.3s ease both; }
 
 @keyframes panel-in {
@@ -303,7 +292,6 @@ body.light .field-input:focus {
   box-shadow: 0 0 0 3px rgba(28,43,58,0.06);
 }
 
-/* ── Password wrapper ─────────────────────────────── */
 .pass-wrap {
   position: relative;
 }
@@ -328,7 +316,6 @@ body.light .field-input:focus {
 .pass-toggle:hover { color: var(--accent); }
 body.light .pass-toggle:hover { color: #1C2B3A; }
 
-/* ── Error message ────────────────────────────────── */
 .form-error {
   font-size: 12px;
   color: #8B3A3A;
@@ -351,7 +338,6 @@ body.light .form-error { color: #9B2335; background: rgba(155,35,53,0.07); borde
   75%      { transform: translateX(4px); }
 }
 
-/* ── Submit button ────────────────────────────────── */
 .submit-btn {
   width: 100%;
   padding: 13px;
@@ -378,7 +364,6 @@ body.light .form-error { color: #9B2335; background: rgba(155,35,53,0.07); borde
 body.light .submit-btn { background: #1C2B3A; border-color: #1C2B3A; color: #F4F2EE; }
 body.light .submit-btn:hover { background: #2C4258; border-color: #2C4258; }
 
-/* ── Form note ────────────────────────────────────── */
 .form-note {
   text-align: center;
   font-size: 12px;
@@ -396,7 +381,6 @@ body.light .submit-btn:hover { background: #2C4258; border-color: #2C4258; }
 .link:hover { color: var(--accent-hover); }
 body.light .link { color: #1C2B3A; }
 
-/* ── Footer ───────────────────────────────────────── */
 .footer {
   position: relative;
   z-index: 1;
@@ -423,7 +407,6 @@ body.light .link { color: #1C2B3A; }
 
 .footer-dot { font-size: 6px; color: var(--footer-dot); }
 
-/* ── Responsive ───────────────────────────────────── */
 @media (max-width: 480px) {
   .navbar { padding: 0 20px; }
   .login-card { padding: 32px 22px 26px; }
