@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <nav class="navbar">
+    <a href="index.html" class="back-btn"><span class="back-arrow">←</span> Back</a>
+    <div class="logo-center">QuizHive</div>
+    <div class="nav-right">
+      <a href="about.html" class="btn-nav">About</a>
+      <a href="categories.html" class="btn-nav">Play</a>
+    </div>
+  </nav>
+
+  <main class="login-wrapper">
+    <div class="login-card">
+
+      <!-- Header -->
+      <div class="card-header">
+        <div class="header-rule"></div>
+        <p class="eyebrow">Welcome Back</p>
+        <h1>Sign in to<br><em>QuizHive</em></h1>
+        <div class="header-rule"></div>
+      </div>
+
+      <!-- tab swtching using inline jss(108) -->
+      <div class="tab-row">
+        <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
+        <button class="tab" id="tab-register" onclick="switchTab('register')">Register</button>
+      </div>
+
+      <!-- Sign In form -->
+      <div class="form-panel" id="panel-login">
+        <div class="field-group">
+          <label class="field-label" for="login-user">Username</label>
+          <input class="field-input" id="login-user" type="text" placeholder="your username" autocomplete="username">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="login-pass">Password</label>
+          <div class="pass-wrap">
+            <input class="field-input" id="login-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+            <button class="pass-toggle" type="button" onclick="togglePass('login-pass', this)" title="Show password">
+              <!-- // this is for the eye to see or not see the password// -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg> <span class="pass-text"></span>
+              <!-- // this is for the eye to see or not see the password // -->
+            </button>
+          </div>
+        </div>
+        <div id="login-error" class="form-error" style="display:none;"></div>
+        <button class="submit-btn" onclick="handleLogin()">Sign In →</button>
+        <p class="form-note">Don't have an account? <span class="link" onclick="switchTab('register')">Register</span></p>
+      </div>
+
+      <!-- Register form -->
+      <div class="form-panel hidden" id="panel-register">
+        <div class="field-group">
+          <label class="field-label" for="reg-user">Choose a Username</label>
+          <input class="field-input" id="reg-user" type="text" placeholder="e.g. quizmaster99" autocomplete="username">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-pass">Password</label>
+          <div class="pass-wrap">
+            <input class="field-input" id="reg-pass" type="password" placeholder="min. 6 characters" autocomplete="new-password">
+            <button class="pass-toggle" type="button" onclick="togglePass('reg-pass', this)" title="Show password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="reg-pass2">Confirm Password</label>
+          <input class="field-input" id="reg-pass2" type="password" placeholder="repeat password" autocomplete="new-password">
+        </div>
+        <div id="reg-error" class="form-error" style="display:none;"></div>
+        <button class="submit-btn" onclick="handleRegister()">Create Account →</button>
+        <p class="form-note">Already registered? <span class="link" onclick="switchTab('login')">Sign In</span></p>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Learn with fun</span>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+  <script>
+    // ── Storage keys 
+    const USERS_KEY   = "quizhive_users";
+    const SESSION_KEY = "quizhive_session";
+
+    // ── Tab switching js
+    function switchTab(tab) {
+      document.getElementById("panel-login").classList.toggle("hidden", tab !== "login");
+      document.getElementById("panel-register").classList.toggle("hidden", tab !== "register");
+      document.getElementById("tab-login").classList.toggle("active", tab === "login");
+      document.getElementById("tab-register").classList.toggle("active", tab === "register");
+      clearErrors();
+    }
+
+    function clearErrors() { 
+      ["login-error","reg-error"].forEach(id => {
+        const el = document.getElementById(id); // is function s jo purana error hota ha wo clear hota ha.
+        el.style.display = "none"; 
+        el.textContent = "";
+      });
+    }
+
+    function showError(id, msg) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.style.display = "block";
+      el.classList.remove("animate-in"); //idhar s animation ko remove kiya
+      void el.offsetWidth; // reflow matlab css animation ko reset krne ke liye
+      el.classList.add("animate-in"); // idhar s Animation phirse start hogi but starting s
+    }
+
+    // ── Password toggle 
+    function togglePass(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const show = input.type === "password";
+      input.type = show ? "text" : "password";
+      btn.style.color = show ? "var(--accent)" : "";
+    }
+
+    // User DB helpers 
+    function getUsers() {
+      try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; }
+      catch { return {}; }
+    }
+
+    function saveUsers(users) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+    }
+
+    // Login
+    function handleLogin() {
+      const user = document.getElementById("login-user").value.trim();
+      const pass = document.getElementById("login-pass").value;
+
+      if (!user || !pass) { showError("login-error", "Please fill in all fields."); return; }
+
+      const users = getUsers();
+      if (!users[user]) { showError("login-error", "Username not found."); return; }
+      if (users[user].password !== btoa(pass)) { showError("login-error", "Incorrect password."); return; }
+
+
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: user }));
+
+      const redirect = new URLSearchParams(window.location.search).get("next") || "index.html";
+      window.location.href = redirect;
+    }
+
+
+    function handleRegister() {
+      const user  = document.getElementById("reg-user").value.trim();
+      const pass  = document.getElementById("reg-pass").value;
+      const pass2 = document.getElementById("reg-pass2").value;
+
+      if (!user || !pass || !pass2) { showError("reg-error", "Please fill in all fields."); return; }
+      if (user.length < 3) { showError("reg-error", "Username must be at least 3 characters."); return; }
+      if (pass.length < 6) { showError("reg-error", "Password must be at least 6 characters."); return; }
+      if (pass !== pass2) { showError("reg-error", "Passwords do not match."); return; }
+
+      const users = getUsers();
+      if (users[user]) { showError("reg-error", "Username already taken."); return; }
+
+      users[user] = { password: btoa(pass), joined: new Date().toISOString() };
+      saveUsers(users);
+
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: user }));
+
+      const redirect = new URLSearchParams(window.location.search).get("next") || "index.html";
+      window.location.href = redirect;
+    }
+
+    document.addEventListener("keydown", e => {
+      if (e.key !== "Enter") return;
+      const loginVisible = !document.getElementById("panel-login").classList.contains("hidden");
+      loginVisible ? handleLogin() : handleRegister();
+    });
+  </script>
+</body>
+</html>

@@ -2,60 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>QuizHive - Your Attempts</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — Leaderboard</title>
 
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link href="leaderboard.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="leaderboard.css">
 </head>
 
 <body>
+  <script src="js/auth.js"></script>
+  <div class="noise"></div>
 
   <nav class="navbar">
-    <a href="index.html" class="back-btn">← Back</a>
+    <a href="index.html" class="back-btn">
+      <span class="back-arrow">←</span> Back
+    </a>
+    <div class="logo-center">QuizHive</div>
+    <a href="categories.html" class="btn-nav">Play</a>
   </nav>
 
-  <div class="history-container" data-aos="fade-up">
-    <h1>📜 Your Attempts</h1>
+  <main class="lb-main">
 
-    <div class="history-item best">
-      <span>#1</span>
-      <span class="category">POP</span>
-      <span class="score">8/8</span>
+    <header class="lb-header">
+      <div class="header-rule"></div>
+      <p class="eyebrow">Your History</p>
+      <h1>Past <em>Attempts</em></h1>
+      <div class="header-rule"></div>
+    </header>
+
+
+    <div class="history-container">
+
+      <div class="table-head">
+        <span>#</span>
+        <span>Category</span>
+        <span>Score</span>
+        <span>Rank</span>
+      </div>
+
+      <div id="leaderboardList"></div>
+
     </div>
 
-    <div class="history-item">
-      <span>#2</span>
-      <span class="category">SPORT</span>
-      <span class="score">7/8</span>
+    <div class="lb-footer-cta">
+      <a href="categories.html" class="cta-btn">
+        Play Another Round →
+      </a>
     </div>
 
-    <div class="history-item">
-      <span>#3</span>
-      <span class="category">SMART</span>
-      <span class="score">6/8</span>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Built with curiosity</span>
     </div>
+  </footer>
 
-    <div class="history-item">
-      <span>#4</span>
-      <span class="category">POP</span>
-      <span class="score">5/8</span>
-    </div>
+  <script src="index.js"></script>
 
-    <div class="history-item">
-      <span>#5</span>
-      <span class="category">SPORT</span>
-      <span class="score">4/8</span>
-    </div>
-
-  </div>
-
-
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 800, once: true });
-  </script>
+<script src="leaderboard.js"></script>
 
 </body>
 </html>

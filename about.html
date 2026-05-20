@@ -1,78 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizHive - About</title>
-
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="about.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — About</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="about.css">
 </head>
 
 <body>
+  <script src="js/auth.js"></script>
 
-    <nav class="navbar">
-        <a href="index.html" class="back-btn">← Back</a>
-    </nav>
+  <div class="noise"></div>
 
-    <main class="about-container">
+  <nav class="navbar">
+    <a href="index.html" class="back-btn"><span class="back-arrow">←</span> Back</a>
+    <div class="logo-center">QuizHive</div>
+    <div class="nav-right">
+      <a href="categories.html" class="btn-nav">Play</a>
+      <a href="leaderboard.html" class="btn-nav">Leaderboard</a>
+    </div>
+  </nav>
 
-        <section class="hero">
-            <h1 data-aos="fade-up">Welcome to QuizHive 🐝</h1>
+  <main class="about-container">
 
-            <p data-aos="fade-up" data-aos-delay="100">
-                A place where curiosity meets fun. Learn, play, and challenge yourself.
-            </p>
-        </section>
+    <header class="hero">
+      <div class="header-rule"></div>
+      <p class="eyebrow">Our Story</p>
+      <h1>Built for curious<br><em>minds like yours.</em></h1>
+      <p class="hero-sub">A place where curiosity meets fun. Learn, play, and challenge yourself every day.</p>
+      <div class="header-rule"></div>
+    </header>
 
-        <section class="about" data-aos="fade-up">
-            <h2>About QuizHive</h2>
-            <p>
-                QuizHive is designed to make learning enjoyable and stress-free. 
-                Instead of boring textbook questions, we focus on real-world topics like pop culture, sports, and everyday knowledge.
-            </p>
-        </section>
+    <section class="about-section">
+      <div class="section-label">About</div>
+      <h2>What is QuizHive?</h2>
+      <p>QuizHive is designed to make learning enjoyable and stress-free. Instead of boring textbook questions, we focus on real-world topics — pop culture, sports, everyday knowledge, and more. Every question comes with a fun fact so you always leave knowing something new.</p>
+    </section>
 
-        <section class="rules">
+    <section class="rules-section">
+      <div class="section-label">How to Play</div>
+      <h2>Game Rules</h2>
 
-            <h2 data-aos="fade-up">Game Rules</h2>
+      <div class="rule-grid">
 
-            <div class="rule-card" data-aos="fade-up" data-aos-delay="100">
-                <h3>1. Choose a Category</h3>
-                <p>Select from available quiz categories.</p>
-            </div>
+        <div class="rule-card">
+          <div class="rule-num">01</div>
+          <div class="rule-body">
+            <h3>Choose a Category</h3>
+            <p>Pick from Pop Culture, Sports, Everyday Smart, or Personality.</p>
+          </div>
+        </div>
 
-            <div class="rule-card" data-aos="fade-up" data-aos-delay="200">
-                <h3>2. Answer Questions</h3>
-                <p>Each quiz contains 8 questions.</p>
-            </div>
+        <div class="rule-card">
+          <div class="rule-num">02</div>
+          <div class="rule-body">
+            <h3>Answer Questions</h3>
+            <p>Each quiz contains exactly 8 questions — no filler, no fluff.</p>
+          </div>
+        </div>
 
-            <div class="rule-card" data-aos="fade-up" data-aos-delay="300">
-                <h3>3. Instant Feedback</h3>
-                <p>You will immediately see if your answer is correct or not.</p>
-            </div>
+        <div class="rule-card">
+          <div class="rule-num">03</div>
+          <div class="rule-body">
+            <h3>Instant Feedback</h3>
+            <p>See immediately whether your answer is correct, with a fun fact attached.</p>
+          </div>
+        </div>
 
-            <div class="rule-card" data-aos="fade-up" data-aos-delay="400">
-                <h3>4. Final Score</h3>
-                <p>Your score will be displayed at the end of the quiz.</p>
-            </div>
+        <div class="rule-card">
+          <div class="rule-num">04</div>
+          <div class="rule-body">
+            <h3>Final Score</h3>
+            <p>Your result is shown at the end. Try to beat your personal best.</p>
+          </div>
+        </div>
 
-        </section>
+      </div>
+    </section>
 
-    </main>
+    <div class="cta-strip">
+      <p><em>"The cure for boredom is curiosity."</em></p>
+      <a href="categories.html" class="cta-btn">Start a Quiz →</a>
+    </div>
 
-    <footer class="footer">
-        <p>© 2026 QuizHive • Learn with fun ⚡</p>
-    </footer>
+  </main>
 
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-    </script>
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Learn with fun</span>
+    </div>
+  </footer>
 
+  <script src="index.js"></script>
 </body>
 </html>

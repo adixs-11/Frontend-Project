@@ -1,67 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizHive - Result</title>
-
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="result.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — Result</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="result.css">
 </head>
 
 <body>
+  <script src="js/auth.js"></script>
+  <div class="noise"></div>
 
-    <nav class="navbar">
-        <a href="categories.html" class="back-btn">← Back</a>
-    </nav>
+  <nav class="navbar">
+    <a href="categories.html" class="back-btn"><span class="back-arrow">←</span> Back</a>
+    <div class="logo-center">QuizHive</div>
+    <div class="nav-placeholder"></div>
+  </nav>
 
-    <main class="result-wrapper">
+  <main class="result-wrapper">
+    <div class="result-container">
 
-        <div class="result-container" data-aos="zoom-in">
+      <div class="result-eyebrow">Quiz Complete</div>
 
-            <h2 data-aos="fade-up">Category:</h2>
-            <h2 id="category_text" data-aos="fade-up" data-aos-delay="100"></h2>
+      <div class="category-row">
+        <span class="category-label">Category</span>
+        <span id="category_text" class="category-val"></span>
+      </div>
 
-            <h1 data-aos="fade-up" data-aos-delay="200">🎯 Your Score</h1>
+      <div class="score-display">
+        <span class="score-num" id="scoreText"></span>
+        <span class="score-denom">/ 8</span>
+      </div>
 
-            <p class="score" id="scoreText" data-aos="zoom-in" data-aos-delay="300"></p>
+      <p class="score-msg" id="scoreMsg"></p>
 
-            <a href="categories.html" class="cta" data-aos="fade-up" data-aos-delay="400">
-                Play Again →
-            </a>
+      <div class="result-rule"></div>
 
-        </div>
+      <div class="result-actions">
+        <a href="categories.html" class="btn-primary">Play Again →</a>
+        <a href="leaderboard.html" class="btn-ghost">View Scores</a>
+      </div>
 
-    </main>
+    </div>
+  </main>
 
-   
-    <footer class="footer">
-        <p>© 2026 QuizHive • Keep learning ⚡</p>
-    </footer>
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Keep learning</span>
+    </div>
+  </footer>
 
-    
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const score = params.get('score');
-        let category = params.get('category');
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const score = parseInt(params.get('score'));
+    let category = params.get('category');
 
-        if (category == "sport") category = "Sports";
-        else if (category == "pop") category = "Pop Culture";
-        else if (category == "smart") category = "Everyday Smart";
+    if (category === 'sport') category = 'Sports';
+    else if (category === 'pop') category = 'Pop Culture';
+    else if (category === 'smart') category = 'Everyday Smart';
+    else if (category === 'personality') category = 'Personality';
 
-        document.getElementById("scoreText").innerText = `${score} / 8`;
-        document.getElementById("category_text").innerText = category;
-    </script>
+    document.getElementById('scoreText').innerText = score;
+    document.getElementById('category_text').innerText = category;
 
-    
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-    </script>
+    const msgs = [
+      'Perfect score. Absolutely flawless.',
+      'Sharp mind. You really know your stuff.',
+      'Solid effort — keep pushing.',
+      'Every expert was once a beginner.'
+    ];
+    let text = 0;
+
+    if (score == 8){
+      text = msgs[0];
+    } 
+    else if (score == 7 ||score == 6){
+      text = msgs[1];
+    }
+    else if (score == 5 || score == 4){
+      text = msgs[2];
+    }
+    else {
+      text = msgs[3];
+    }
+
+    document.getElementById('scoreMsg').innerText = text;
+    console.log(text);
+  </script>
+
+<script src="index.js"></script>
+<script src="js/save-score.js"></script>
+
+<script>
+  saveScore(score, category);
+</script>
 
 </body>
 </html>

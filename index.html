@@ -17,9 +17,13 @@
 </head>
 
 <body>
+<script src="js/auth.js"></script>
+  <video autoplay muted loop playsinline class="bg-video dark-video">
+    <source src="/project_img/dark-bg.mp4" type="video/mp4">
+  </video>
 
-  <video autoplay muted loop playsinline class="bg-video">
-    <source src="/project_img/video1.mp4" type="video/mp4">
+  <video autoplay muted loop playsinline class="bg-video light-video">
+    <source src="/project_img/light-bg.mp4" type="video/mp4">
   </video>
 
   <div class="overlay"></div>
@@ -33,14 +37,13 @@
       <a href="leaderboard.html">Leaderboard</a>
       <a href="categories.html">Play</a>
 
-      <select id="themeToggle" >
+      <select id="themeToggle" onchange="themeToggle(this.value)">
         <option value="dark">Dark</option>
         <option value="light">Light</option>
       </select>
       
     </div>
   </nav>
-
 
   <section class="main">
     <h1>Learn. Play. Repeat.</h1>
@@ -88,9 +91,7 @@
 
   </div>
 
-  <script>
-
-  </script>
+  <script src="index.js"></script>
 
 </body>
 </html>

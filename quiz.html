@@ -1,52 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizHive - Quiz</title>
-
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="quiz.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="quiz.css">
 </head>
 
 <body>
+  <script src="js/auth.js"></script>
+  <div class="noise"></div>
 
-    <nav class="navbar">
-        <a href="categories.html" class="back-btn">← Back</a>
-        <div id="score"></div>
-    </nav>
+  <nav class="navbar">
+    <a href="categories.html" class="back-btn"><span class="back-arrow">←</span> Back</a>
+    <div class="logo-center">QuizHive</div>
+    <div class="nav-right-group">
+      <div class="timer-ring-wrap" id="timerWrap">
+        <svg class="timer-ring" viewBox="0 0 40 40">
+          <circle class="ring-bg" cx="20" cy="20" r="16"/>
+          <circle class="ring-fill" id="ringFill" cx="20" cy="20" r="16"/>
+        </svg>
+        <span class="timer-num" id="timerNum">15</span>
+      </div>
+      <div id="score"></div>
+    </div>
+  </nav>
 
-    <div class="container" data-aos="fade-up">
+  <main class="quiz-main">
 
+    <div class="container">
+
+      <div class="card-header">
         <h1 id="categoryTitle"></h1>
-
-        <p id="progressText"></p>
-        
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-label">
+          <span id="progressText"></span>
         </div>
+      </div>
 
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
 
-        <h2 id="question"></h2>
+      <h2 id="question"></h2>
 
-        <div id="options"></div>
+      <div id="options"></div>
 
-        <button id="nextBtn" onclick="nextQuestion()">Next →</button>
+      <div id="funfact" class="funfact"></div>
+
+      <button id="nextBtn" onclick="nextQuestion()">
+        Next <span>→</span>
+      </button>
 
     </div>
 
-    <footer class="footer">
-        <p>© 2026 QuizHive • Stay curious ⚡</p>
-    </footer>
+  </main>
 
-    <script src="quiz.js"></script>
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Stay curious</span>
+    </div>
+  </footer>
 
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-    <script>
-        AOS.init({ duration: 800, once: true });
-    </script>
+  <script src="quiz.js"></script>
+  <script src="index.js"></script>
 
 </body>
 </html>
