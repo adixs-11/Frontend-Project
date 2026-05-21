@@ -2,7 +2,6 @@ let currentQ = 0;
 let score = 0;
 let answered = false;
 
-/* ── Timer ─────────────────────────────────── */
 const PER_Q_SECONDS = 15;
 const CIRCUMFERENCE = 2 * Math.PI * 16; 
 
