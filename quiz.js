@@ -37,7 +37,6 @@ function updateTimerUI(t) {
 
   numEl.textContent = t;
 
-  // shrink the stroke as time drains
   const offset = CIRCUMFERENCE * (1 - t / PER_Q_SECONDS);
   ringEl.style.strokeDashoffset = offset;
 
@@ -51,27 +50,25 @@ function handleTimeout() {
   if (answered) return;
   answered = true;
 
-  // dim all options, reveal correct answer
   const q = selectedQuestions[currentQ];
   const buttons = document.querySelectorAll("#options button");
   buttons.forEach(b => {
     b.disabled = true;
-    if (b.innerText === q.correctAnswer) {
+    if (category === 'personality') {
+      b.classList.add("timeout");
+    } else if (b.innerText === q.correctAnswer) {
       b.classList.add("correct");
     } else {
       b.classList.add("timeout");
     }
   });
 
-  // show fun fact
   funDiv.innerText = q.funFact;
   funDiv.classList.remove("show");
   setTimeout(() => funDiv.classList.add("show"), 230);
 
-  // auto-advance after 1.8 s
   setTimeout(() => nextQuestion(), 1800);
 }
-/* ── End Timer ───────────────────────────────── */
 
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("category"); 
@@ -1707,6 +1704,225 @@ const quizData = {
           funFact: "A 'Medical Power of Attorney' specifically allows someone to make life-or-death healthcare decisions for you if you end up in a coma or are otherwise incapacitated."
         }
       ]
+    },
+
+    personality: {
+      easy: [
+        {
+          question: "It's Friday night. Your ideal evening looks like...",
+          options: ["A cozy night in with a good book or show", "Hanging out with a few close friends", "A spontaneous adventure — who knows where!", "A big, buzzing social event or party"],
+          correctAnswer: "A cozy night in with a good book or show",
+          funFact: "There's no wrong answer here — your social battery is your own superpower! Introverts recharge alone; extroverts recharge with people.",
+          personalityTag: { "A cozy night in with a good book or show": "introvert", "Hanging out with a few close friends": "ambivert", "A spontaneous adventure — who knows where!": "adventurer", "A big, buzzing social event or party": "extrovert" }
+        },
+        {
+          question: "When you get a big new project, your first instinct is to...",
+          options: ["Make a detailed plan before doing anything", "Dive straight in and figure it out as you go", "Talk it through with someone to get ideas flowing", "Research everything you can before starting"],
+          correctAnswer: "Make a detailed plan before doing anything",
+          funFact: "Planners and divers both succeed — they just take different scenic routes to the finish line!",
+          personalityTag: { "Make a detailed plan before doing anything": "planner", "Dive straight in and figure it out as you go": "doer", "Talk it through with someone to get ideas flowing": "collaborator", "Research everything you can before starting": "analyst" }
+        },
+        {
+          question: "A friend is upset about something. You instinctively...",
+          options: ["Listen quietly and let them vent without interrupting", "Immediately try to find a solution to their problem", "Share a similar story of your own to make them feel less alone", "Give them space and check in later"],
+          correctAnswer: "Listen quietly and let them vent without interrupting",
+          funFact: "Research shows that most people actually want to feel heard first — and solutions second. Your listening style says a lot!",
+          personalityTag: { "Listen quietly and let them vent without interrupting": "empath", "Immediately try to find a solution to their problem": "problem-solver", "Share a similar story of your own to make them feel less alone": "connector", "Give them space and check in later": "independent" }
+        },
+        {
+          question: "Your ideal workspace is...",
+          options: ["Quiet, organized, and completely to myself", "Lively — I love background noise and bustle", "Flexible — sometimes solo, sometimes collaborative", "Outdoors or somewhere with a view and fresh air"],
+          correctAnswer: "Quiet, organized, and completely to myself",
+          funFact: "Studies found that open-plan offices can actually reduce productivity for focused thinkers, while social types thrive in them!",
+          personalityTag: { "Quiet, organized, and completely to myself": "focused", "Lively — I love background noise and bustle": "social", "Flexible — sometimes solo, sometimes collaborative": "adaptable", "Outdoors or somewhere with a view and fresh air": "free-spirit" }
+        },
+        {
+          question: "When you're making an important decision, you rely mostly on...",
+          options: ["Logic and data — the facts speak for themselves", "Your gut feeling — instincts rarely lie", "What feels right emotionally", "What others you trust think about it"],
+          correctAnswer: "Logic and data — the facts speak for themselves",
+          funFact: "Neuroscience shows that even when we think we're being purely logical, emotions play a role in nearly every decision we make!",
+          personalityTag: { "Logic and data — the facts speak for themselves": "thinker", "Your gut feeling — instincts rarely lie": "intuitive", "What feels right emotionally": "feeler", "What others you trust think about it": "relational" }
+        },
+        {
+          question: "Which of these would you find most rewarding?",
+          options: ["Mastering a complex skill completely on your own", "Leading a team to a big shared victory", "Creating something beautiful and artistic", "Helping someone through a genuinely tough time"],
+          correctAnswer: "Mastering a complex skill completely on your own",
+          funFact: "Psychologist Abraham Maslow called self-actualization — fulfilling your own potential — the peak of human motivation.",
+          personalityTag: { "Mastering a complex skill completely on your own": "achiever", "Leading a team to a big shared victory": "leader", "Creating something beautiful and artistic": "creator", "Helping someone through a genuinely tough time": "caregiver" }
+        },
+        {
+          question: "Your phone notifications are...",
+          options: ["All turned off — I check on my own schedule", "Mostly on — I like staying in the loop", "Selective — only the important ones", "Constant chaos — I reply to everything instantly"],
+          correctAnswer: "All turned off — I check on my own schedule",
+          funFact: "The average person checks their phone 96 times a day. Turning off notifications is linked to lower stress and better focus!",
+          personalityTag: { "All turned off — I check on my own schedule": "boundary-setter", "Mostly on — I like staying in the loop": "connector", "Selective — only the important ones": "pragmatist", "Constant chaos — I reply to everything instantly": "social" }
+        },
+        {
+          question: "When you walk into a room full of strangers, you feel...",
+          options: ["Excited — new people are interesting!", "A bit nervous, but I warm up quickly", "Overwhelmed — I stick near whoever I came with", "Calm — I observe first, then engage when ready"],
+          correctAnswer: "Excited — new people are interesting!",
+          funFact: "Shyness and introversion are different things! You can be an outgoing introvert or a shy extrovert — personality is wonderfully complex.",
+          personalityTag: { "Excited — new people are interesting!": "extrovert", "A bit nervous, but I warm up quickly": "ambivert", "Overwhelmed — I stick near whoever I came with": "introvert", "Calm — I observe first, then engage when ready": "observer" }
+        },
+        {
+          question: "Your bedroom/living space is best described as...",
+          options: ["Meticulously tidy — everything has its place", "Comfortably lived-in with some organized chaos", "A creative mess that only I understand", "Minimalist — less is more"],
+          correctAnswer: "Meticulously tidy — everything has its place",
+          funFact: "Psychologists link a tidy space to a preference for control and routine, while creative mess-makers often score high on openness to experience!",
+          personalityTag: { "Meticulously tidy — everything has its place": "organized", "Comfortably lived-in with some organized chaos": "balanced", "A creative mess that only I understand": "creative", "Minimalist — less is more": "minimalist" }
+        },
+        {
+          question: "If you could have any superpower, you'd choose...",
+          options: ["Mind-reading — understanding people perfectly", "Time travel — learning from the past and future", "Invisibility — observing the world undetected", "Super-speed — getting everything done instantly"],
+          correctAnswer: "Mind-reading — understanding people perfectly",
+          funFact: "Psychologists say your fantasy superpower often reflects your deepest real-world desire — whether that's connection, knowledge, freedom, or control.",
+          personalityTag: { "Mind-reading — understanding people perfectly": "empath", "Time travel — learning from the past and future": "curious", "Invisibility — observing the world undetected": "observer", "Super-speed — getting everything done instantly": "achiever" }
+        }
+      ],
+      medium: [
+        {
+          question: "You're stressed. Without thinking, you reach for...",
+          options: ["Your journal or a quiet place to think", "Your phone to call a friend", "Something physical — a walk, gym, sports", "A distraction — series, game, or snacks"],
+          correctAnswer: "Your journal or a quiet place to think",
+          funFact: "Our stress response is deeply personal and often hardwired from childhood coping mechanisms. There's no 'wrong' way to decompress.",
+          personalityTag: { "Your journal or a quiet place to think": "reflective", "Your phone to call a friend": "social", "Something physical — a walk, gym, sports": "active", "A distraction — series, game, or snacks": "escapist" }
+        },
+        {
+          question: "In a group project, you naturally end up being...",
+          options: ["The one who organizes everyone and sets deadlines", "The idea generator who sparks creativity", "The peacekeeper who keeps the team vibe positive", "The executor who quietly does the most work"],
+          correctAnswer: "The one who organizes everyone and sets deadlines",
+          funFact: "Most successful teams need all four roles — the organizer, creative, harmonizer, and doer. Every type is essential!",
+          personalityTag: { "The one who organizes everyone and sets deadlines": "leader", "The idea generator who sparks creativity": "innovator", "The peacekeeper who keeps the team vibe positive": "harmonizer", "The executor who quietly does the most work": "workhorse" }
+        },
+        {
+          question: "Someone criticizes your work. Your gut reaction is...",
+          options: ["Defensive — my effort deserves more respect", "Analytical — is this feedback valid or not?", "Hurt, but I'll reflect on it later privately", "Grateful — I genuinely value outside perspectives"],
+          correctAnswer: "Analytical — is this feedback valid or not?",
+          funFact: "Research shows that separating your identity from your work — called 'psychological distance' — makes feedback far easier to process and act on.",
+          personalityTag: { "Defensive — my effort deserves more respect": "passionate", "Analytical — is this feedback valid or not?": "thinker", "Hurt, but I'll reflect on it later privately": "sensitive", "Grateful — I genuinely value outside perspectives": "grower" }
+        },
+        {
+          question: "Your relationship with money is best described as...",
+          options: ["Saver — security comes first, always", "Balanced — I save, but I enjoy life too", "Spender — experiences and things bring me joy", "Investor — money is a tool for building more money"],
+          correctAnswer: "Balanced — I save, but I enjoy life too",
+          funFact: "Your 'money personality' is often shaped by the financial environment you grew up in — scarcity creates savers, abundance can create spenders.",
+          personalityTag: { "Saver — security comes first, always": "security-seeker", "Balanced — I save, but I enjoy life too": "balanced", "Spender — experiences and things bring me joy": "experiencer", "Investor — money is a tool for building more money": "builder" }
+        },
+        {
+          question: "When a relationship (any kind) goes wrong, you tend to...",
+          options: ["Replay every detail trying to figure out what happened", "Talk to trusted people about how you're feeling", "Throw yourself into work or hobbies to move forward", "Cut ties and focus on what's ahead"],
+          correctAnswer: "Talk to trusted people about how you're feeling",
+          funFact: "Psychologists call talking through painful experiences 'emotional processing,' and research confirms it genuinely accelerates healing compared to suppression.",
+          personalityTag: { "Replay every detail trying to figure out what happened": "ruminator", "Talk to trusted people about how you're feeling": "processor", "Throw yourself into work or hobbies to move forward": "activator", "Cut ties and focus on what's ahead": "forward-thinker" }
+        },
+        {
+          question: "How do you typically feel after a long social event?",
+          options: ["Energized and buzzing — I want to do it again", "Happy but ready for some quiet time", "Thoroughly exhausted — I need two days to recover", "It depends entirely on the people involved"],
+          correctAnswer: "It depends entirely on the people involved",
+          funFact: "Ambiversion — sitting in the middle of the introvert-extrovert spectrum — is actually the most common personality trait of all!",
+          personalityTag: { "Energized and buzzing — I want to do it again": "extrovert", "Happy but ready for some quiet time": "ambivert", "Thoroughly exhausted — I need two days to recover": "introvert", "It depends entirely on the people involved": "selective" }
+        },
+        {
+          question: "Which phrase resonates with you most deeply?",
+          options: ["'Work smarter, not harder'", "'Go big or go home'", "'Slow and steady wins the race'", "'The journey IS the destination'"],
+          correctAnswer: "'The journey IS the destination'",
+          funFact: "The phrase 'The journey is the destination' is often attributed to Ralph Waldo Emerson and reflects a process-over-outcome growth mindset.",
+          personalityTag: { "'Work smarter, not harder'": "strategist", "'Go big or go home'": "bold", "'Slow and steady wins the race'": "patient", "'The journey IS the destination'": "present" }
+        },
+        {
+          question: "Your biggest personal strength that others notice first is...",
+          options: ["Reliability — people know they can count on me", "Creativity — I always see things differently", "Empathy — I genuinely understand how others feel", "Drive — I go after what I want and get it"],
+          correctAnswer: "Reliability — people know they can count on me",
+          funFact: "Studies show that reliability is consistently rated the #1 most valued trait in both friendships and work relationships — above intelligence or charm.",
+          personalityTag: { "Reliability — people know they can count on me": "dependable", "Creativity — I always see things differently": "creative", "Empathy — I genuinely understand how others feel": "empath", "Drive — I go after what I want and get it": "driven" }
+        },
+        {
+          question: "When you have completely free time with no obligations, you feel...",
+          options: ["Blissful — freedom is my happy place", "A little lost — I function best with structure", "Productive — I fill it with self-improvement", "Social — I immediately make plans with people"],
+          correctAnswer: "Blissful — freedom is my happy place",
+          funFact: "Psychologists call the discomfort of unstructured time 'leisure sickness.' Type A personalities often struggle more with free time than busy ones!",
+          personalityTag: { "Blissful — freedom is my happy place": "free-spirit", "A little lost — I function best with structure": "structured", "Productive — I fill it with self-improvement": "achiever", "Social — I immediately make plans with people": "social" }
+        },
+        {
+          question: "Your friends would most likely describe you as...",
+          options: ["The reliable one — always there no matter what", "The funny one — lightening the mood constantly", "The wise one — everyone comes to you for advice", "The wild card — you keep things exciting and surprising"],
+          correctAnswer: "The reliable one — always there no matter what",
+          funFact: "Research on friendship longevity shows that 'the reliable one' is the most likely to maintain deep friendships over decades.",
+          personalityTag: { "The reliable one — always there no matter what": "anchor", "The funny one — lightening the mood constantly": "entertainer", "The wise one — everyone comes to you for advice": "sage", "The wild card — you keep things exciting and surprising": "adventurer" }
+        }
+      ],
+      hard: [
+        {
+          question: "You discover a colleague is cutting corners in a way that affects team quality. You...",
+          options: ["Address them directly and privately — give them a chance", "Report it immediately to a manager — standards matter", "Say nothing but quietly compensate for their work", "Bring it up in the next team meeting openly"],
+          correctAnswer: "Address them directly and privately — give them a chance",
+          funFact: "Conflict avoidance costs organizations billions yearly. Psychological safety — being able to speak up without fear — is the #1 predictor of team effectiveness.",
+          personalityTag: { "Address them directly and privately — give them a chance": "courageous", "Report it immediately to a manager — standards matter": "principled", "Say nothing but quietly compensate for their work": "self-sacrificing", "Bring it up in the next team meeting openly": "direct" }
+        },
+        {
+          question: "What is your primary relationship with change?",
+          options: ["I actively seek it — stagnation feels like death", "I adapt well when it's necessary", "I manage it, but it takes real effort", "I resist it — stability is something I protect deeply"],
+          correctAnswer: "I adapt well when it's necessary",
+          funFact: "Change tolerance is deeply tied to the Big Five trait of 'Openness to Experience.' High scorers crave novelty; low scorers prefer predictability — both have evolutionary advantages.",
+          personalityTag: { "I actively seek it — stagnation feels like death": "seeker", "I adapt well when it's necessary": "adaptor", "I manage it, but it takes real effort": "resilient", "I resist it — stability is something I protect deeply": "anchor" }
+        },
+        {
+          question: "At your core, what do you fear most?",
+          options: ["Being completely alone and unloved", "Losing control of my life and choices", "Being mediocre and never reaching my potential", "Being fundamentally misunderstood by others"],
+          correctAnswer: "Being completely alone and unloved",
+          funFact: "These four fears map closely to psychology's four core attachment needs: connection, autonomy, competence, and being seen. All four are universal human drives.",
+          personalityTag: { "Being completely alone and unloved": "connector", "Losing control of my life and choices": "autonomous", "Being mediocre and never reaching my potential": "achiever", "Being fundamentally misunderstood by others": "deep-thinker" }
+        },
+        {
+          question: "When you reflect on your past self, you mostly feel...",
+          options: ["Proud — I've grown enormously from who I was", "Nostalgic — those were simpler, better times", "Critical — I could have done so much more, sooner", "Neutral — the past is just information, not identity"],
+          correctAnswer: "Proud — I've grown enormously from who I was",
+          funFact: "A 'growth narrative' — telling your life story as one of progress — is linked by researchers to greater resilience, wellbeing, and life satisfaction.",
+          personalityTag: { "Proud — I've grown enormously from who I was": "grower", "Nostalgic — those were simpler, better times": "nostalgic", "Critical — I could have done so much more, sooner": "perfectionist", "Neutral — the past is just information, not identity": "pragmatist" }
+        },
+        {
+          question: "When you succeed at something, your first instinct is to...",
+          options: ["Celebrate loudly — you deserve to enjoy the moment!", "Quietly feel satisfied and then set the next goal", "Share the credit — no one succeeds completely alone", "Immediately wonder what's next before it fades"],
+          correctAnswer: "Share the credit — no one succeeds completely alone",
+          funFact: "High achievers who credit their team, rather than solely themselves, are rated as significantly better leaders and build stronger long-term cultures.",
+          personalityTag: { "Celebrate loudly — you deserve to enjoy the moment!": "celebrator", "Quietly feel satisfied and then set the next goal": "humble-achiever", "Share the credit — no one succeeds completely alone": "team-player", "Immediately wonder what's next before it fades": "restless" }
+        },
+        {
+          question: "Your personal philosophy on life is closest to...",
+          options: ["'Control what you can, release what you can't'", "'Comfort is the enemy of growth'", "'Happiness is a choice you make daily'", "'Life has no meaning — so create your own'"],
+          correctAnswer: "'Control what you can, release what you can't'",
+          funFact: "The Stoic idea of focusing only on what's within your control — practiced by Marcus Aurelius 2,000 years ago — is now a cornerstone of modern Cognitive Behavioural Therapy.",
+          personalityTag: { "'Control what you can, release what you can't'": "stoic", "'Comfort is the enemy of growth'": "challenger", "'Happiness is a choice you make daily'": "optimist", "'Life has no meaning — so create your own'": "existentialist" }
+        },
+        {
+          question: "How do you handle situations where your values and loyalty conflict?",
+          options: ["Values always win — integrity is non-negotiable", "Loyalty wins — people over principles", "I find a creative middle ground whenever possible", "It genuinely depends on the depth of the stakes involved"],
+          correctAnswer: "Values always win — integrity is non-negotiable",
+          funFact: "Philosophers call this an 'ethical dilemma.' Kohlberg's stages of moral development suggest the highest stage is acting on universal principles, even against social pressure.",
+          personalityTag: { "Values always win — integrity is non-negotiable": "principled", "Loyalty wins — people over principles": "loyal", "I find a creative middle ground whenever possible": "diplomat", "It genuinely depends on the depth of the stakes involved": "contextual" }
+        },
+        {
+          question: "What is the truest statement about how you see yourself?",
+          options: ["I know exactly who I am — I'm very self-aware", "I'm still figuring myself out and that's okay", "I'm different people in different contexts", "I'm defined by my relationships, not by myself alone"],
+          correctAnswer: "I'm still figuring myself out and that's okay",
+          funFact: "Erik Erikson's stages of identity development suggest that identity isn't a fixed destination — even adults continue to revise their self-concept across a lifetime.",
+          personalityTag: { "I know exactly who I am — I'm very self-aware": "grounded", "I'm still figuring myself out and that's okay": "evolving", "I'm different people in different contexts": "chameleon", "I'm defined by my relationships, not by myself alone": "relational" }
+        },
+        {
+          question: "When you imagine your best possible future, the most essential element is...",
+          options: ["Deep, meaningful relationships and love", "Freedom to live completely on my own terms", "Work that I find genuinely meaningful and impactful", "Comfort, security, and peace of mind"],
+          correctAnswer: "Deep, meaningful relationships and love",
+          funFact: "Harvard's 85-year-long Study of Adult Development found that the quality of relationships — more than wealth, fame, or career — is the single strongest predictor of a long, happy life.",
+          personalityTag: { "Deep, meaningful relationships and love": "connector", "Freedom to live completely on my own terms": "free-spirit", "Work that I find genuinely meaningful and impactful": "purpose-driven", "Comfort, security, and peace of mind": "stabilizer" }
+        },
+        {
+          question: "Someone you respect holds a view you find completely wrong. You...",
+          options: ["Respectfully challenge them — I can't stay silent on this", "Listen openly — maybe I'm missing something here", "Avoid the topic — the relationship matters more", "Research it further privately before forming a final view"],
+          correctAnswer: "Listen openly — maybe I'm missing something here",
+          funFact: "Intellectual humility — the ability to genuinely consider you might be wrong — is one of the strongest predictors of learning, wisdom, and quality of reasoning across a lifetime.",
+          personalityTag: { "Respectfully challenge them — I can't stay silent on this": "debater", "Listen openly — maybe I'm missing something here": "humble", "Avoid the topic — the relationship matters more": "harmonizer", "Research it further privately before forming a final view": "analyst" }
+        }
+      ]
     }
 
     
@@ -1733,11 +1949,15 @@ const selectedQuestions = pool.slice(0, 8);
 
 function loadQuestion(){
     answered = false;
-    startTimer();  // ← start fresh timer for each question
+    startTimer(); 
 
     document.getElementById("categoryTitle").innerText = `${category.toUpperCase()} — ${diff.toUpperCase()}`;
 
-    document.getElementById("score").innerText = `Score: ${score}`;
+    if(category === 'personality'){
+      document.getElementById("score").style.display = "none";
+    } else {
+      document.getElementById("score").innerText = `Score: ${score}`;
+    }
     document.getElementById("progressText").innerText = `Question ${currentQ + 1} of 8`;
 
     const progressPercent = ((currentQ + 1) / 8) * 100;
@@ -1762,11 +1982,18 @@ function loadQuestion(){
         return;
       }
       answered = true;
-      stopTimer(); // ← stop countdown once answered
+      stopTimer();
+
+      if(category === 'personality'){
+        if(!window._personalityAnswers) window._personalityAnswers = {};
+        window._personalityAnswers[currentQ] = option;
+      }
 
       const buttons = document.querySelectorAll("#options button");
 
-      if(option === q.correctAnswer){
+      if(category === 'personality'){
+        btn.classList.add("correct");
+      } else if(option === q.correctAnswer){
         score++;
         btn.classList.add("correct");
       } 
@@ -1776,7 +2003,7 @@ function loadQuestion(){
 
       buttons.forEach(b => {
         b.disabled = true;
-        if(b.innerText === q.correctAnswer){
+        if(category !== 'personality' && b.innerText === q.correctAnswer){
           b.classList.add("correct");
         }
       });
@@ -1800,7 +2027,17 @@ function nextQuestion(){
     currentQ++;
     if(currentQ >= 8){
       stopTimer();
-      location.href = `result.html?score=${score}&category=${category}&difficulty=${diff}`;
+      if(category === 'personality'){
+        const tags = selectedQuestions.map((q, i) => {
+          const chosen = window._personalityAnswers ? window._personalityAnswers[i] : null;
+          if(chosen && q.personalityTag) return q.personalityTag[chosen];
+          return null;
+        }).filter(Boolean);
+        const encoded = encodeURIComponent(JSON.stringify(tags));
+        location.href = `personality-result.html?tags=${encoded}&difficulty=${diff}`;
+      } else {
+        location.href = `result.html?score=${score}&category=${category}&difficulty=${diff}`;
+      }
     } else {
       loadQuestion();
       funDiv.innerText = "";

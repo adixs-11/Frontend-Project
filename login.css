@@ -51,6 +51,7 @@ h1, h2, h3, .logo-center, .footer-logo {
   font-weight: 700;
 }
 
+
 .noise {
   pointer-events: none;
   position: fixed;
@@ -73,6 +74,7 @@ body.light::after {
   background-size: 28px 28px;
   opacity: 0.04;
 }
+
 
 .navbar {
   position: sticky;
@@ -139,6 +141,7 @@ body.light .back-btn:hover { color: #1C2B3A; }
 .btn-nav:hover { background: var(--accent); color: var(--text-on-accent); border-color: var(--accent); }
 body.light .btn-nav:hover { background: #1C2B3A; color: #F4F2EE; border-color: #1C2B3A; }
 
+
 .login-wrapper {
   flex: 1;
   position: relative;
@@ -148,6 +151,7 @@ body.light .btn-nav:hover { background: #1C2B3A; color: #F4F2EE; border-color: #
   justify-content: center;
   padding: 56px 20px 48px;
 }
+
 
 .login-card {
   background: var(--bg-card);
@@ -215,6 +219,7 @@ body.light .eyebrow { color: #7A96AA; }
 .card-header h1 em { font-style: italic; color: var(--accent); }
 body.light .card-header h1 em { color: #2C4258; }
 
+
 .tab-row {
   display: flex;
   border: 1px solid var(--border);
@@ -245,6 +250,7 @@ body.light .card-header h1 em { color: #2C4258; }
 
 body.light .tab.active { background: #1C2B3A; color: #F4F2EE; }
 .tab:not(.active):hover { color: var(--text-body); background: var(--bg-surface); }
+
 
 .form-panel { animation: panel-in 0.3s ease both; }
 
@@ -292,6 +298,7 @@ body.light .field-input:focus {
   box-shadow: 0 0 0 3px rgba(28,43,58,0.06);
 }
 
+
 .pass-wrap {
   position: relative;
 }
@@ -316,6 +323,7 @@ body.light .field-input:focus {
 .pass-toggle:hover { color: var(--accent); }
 body.light .pass-toggle:hover { color: #1C2B3A; }
 
+
 .form-error {
   font-size: 12px;
   color: #8B3A3A;
@@ -337,6 +345,7 @@ body.light .form-error { color: #9B2335; background: rgba(155,35,53,0.07); borde
   25%      { transform: translateX(-4px); }
   75%      { transform: translateX(4px); }
 }
+
 
 .submit-btn {
   width: 100%;
@@ -363,6 +372,7 @@ body.light .form-error { color: #9B2335; background: rgba(155,35,53,0.07); borde
 
 body.light .submit-btn { background: #1C2B3A; border-color: #1C2B3A; color: #F4F2EE; }
 body.light .submit-btn:hover { background: #2C4258; border-color: #2C4258; }
+
 
 .form-note {
   text-align: center;

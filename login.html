@@ -31,6 +31,7 @@
         <div class="header-rule"></div>
       </div>
 
+
       <div class="tab-row">
         <button class="tab active" id="tab-login" onclick="switchTab('login')">Sign In</button>
         <button class="tab" id="tab-register" onclick="switchTab('register')">Register</button>
@@ -49,8 +50,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                 <circle cx="12" cy="12" r="3"/>
-              </svg> <span class="pass-text"></span>
-              
+              </svg>
             </button>
           </div>
         </div>
@@ -58,6 +58,7 @@
         <button class="submit-btn" onclick="handleLogin()">Sign In →</button>
         <p class="form-note">Don't have an account? <span class="link" onclick="switchTab('register')">Register</span></p>
       </div>
+
 
       <div class="form-panel hidden" id="panel-register">
         <div class="field-group">
@@ -98,96 +99,182 @@
 
   <script src="index.js"></script>
   <script>
-
-    const USERS_KEY   = "quizhive_users";
+    const USERS_KEY = "quizhive_users";
     const SESSION_KEY = "quizhive_session";
 
-    function switchTab(tab) {
-      document.getElementById("panel-login").classList.toggle("hidden", tab !== "login");
-      document.getElementById("panel-register").classList.toggle("hidden", tab !== "register");
-      document.getElementById("tab-login").classList.toggle("active", tab === "login");
-      document.getElementById("tab-register").classList.toggle("active", tab === "register");
-      clearErrors();
+function switchTab(tab) {
+  var loginPanel = document.getElementById("panel-login");
+  var registerPanel = document.getElementById("panel-register");
+  var loginTab = document.getElementById("tab-login");
+  var registerTab = document.getElementById("tab-register");
+
+  if (tab === "login") {
+    loginPanel.classList.remove("hidden");
+    registerPanel.classList.add("hidden");
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+  } else {
+    loginPanel.classList.add("hidden");
+    registerPanel.classList.remove("hidden");
+    loginTab.classList.remove("active");
+    registerTab.classList.add("active");
+  }
+
+  clearErrors();
+}
+
+function clearErrors() {
+  var loginError = document.getElementById("login-error");
+  var regError = document.getElementById("reg-error");
+
+  loginError.style.display = "none";
+  loginError.textContent = "";
+
+  regError.style.display = "none";
+  regError.textContent = "";
+}
+
+function showError(id, msg) {
+  var errorBox = document.getElementById(id);
+
+  errorBox.textContent = msg;
+  errorBox.style.display = "block";
+
+  errorBox.classList.remove("animate-in");
+  setTimeout(function () {
+    errorBox.classList.add("animate-in");
+  }, 10);
+}
+
+function togglePass(inputId, btn) {
+  var input = document.getElementById(inputId);
+
+  if (input.type === "password") {
+    input.type = "text";
+    btn.style.color = "var(--accent)";
+  } else {
+    input.type = "password";
+    btn.style.color = "";
+  }
+}
+
+function getUsers() {
+  var savedUsers = localStorage.getItem(USERS_KEY);
+
+  if (savedUsers === null) {
+    return {};
+  }
+
+  return JSON.parse(savedUsers);
+}
+
+function saveUsers(users) {
+  var usersText = JSON.stringify(users);
+  localStorage.setItem(USERS_KEY, usersText);
+}
+
+function getRedirectPage() {
+  var searchText = window.location.search;
+
+  if (searchText.indexOf("next=") === -1) {
+    return "index.html";
+  }
+
+  var nextPart = searchText.split("next=")[1];
+  var pageName = nextPart.split("&")[0];
+
+  return pageName;
+}
+
+function handleLogin() {
+  var user = document.getElementById("login-user").value.trim();
+  var pass = document.getElementById("login-pass").value;
+  if (user === "" || pass === "") {
+    showError("login-error", "Please fill in all fields.");
+    return;
+  }
+
+  var users = getUsers();
+
+  if (users[user] === undefined) {
+    showError("login-error", "Username not found.");
+    return;
+  }
+
+  if (users[user].password !== btoa(pass)) {
+    showError("login-error", "Incorrect password.");
+    return;
+  }
+
+  var session = {
+    username: user
+  };
+
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+  window.location.href = getRedirectPage();
+}
+
+function handleRegister() {
+  var user = document.getElementById("reg-user").value.trim();
+  var pass = document.getElementById("reg-pass").value;
+  var pass2 = document.getElementById("reg-pass2").value;
+
+  if (user === "" || pass === "" || pass2 === "") {
+    showError("reg-error", "Please fill in all fields.");
+    return;
+  }
+
+  if (user.length < 3) {
+    showError("reg-error", "Username must be at least 3 characters.");
+    return;
+  }
+
+  if (pass.length < 6) {
+    showError("reg-error", "Password must be at least 6 characters.");
+    return;
+  }
+
+  if (pass !== pass2) {
+    showError("reg-error", "Passwords do not match.");
+    return;
+  }
+
+  var users = getUsers();
+
+  if (users[user] !== undefined) {
+    showError("reg-error", "Username already taken.");
+    return;
+  }
+
+  users[user] = {
+    password: btoa(pass),
+    joined: new Date().toISOString()
+  };
+
+  saveUsers(users);
+
+  var session = {
+    username: user
+  };
+
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+  window.location.href = getRedirectPage();
+}
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    var loginPanel = document.getElementById("panel-login");
+
+    if (loginPanel.classList.contains("hidden")) {
+      handleRegister();
+    } else {
+      handleLogin();
     }
+  }
+});
 
-    function clearErrors() { 
-      ["login-error","reg-error"].forEach(id => {
-        const el = document.getElementById(id); // is function s jo purana error hota ha wo clear hota ha.
-        el.style.display = "none"; 
-        el.textContent = "";
-      });
-    }
-
-    function showError(id, msg) {
-      const el = document.getElementById(id);
-      el.textContent = msg;
-      el.style.display = "block";
-      el.classList.remove("animate-in"); //idhar s animation ko remove kiya
-      void el.offsetWidth; // reflow matlab css animation ko reset krne ke liye
-      el.classList.add("animate-in"); // idhar s Animation phirse start hogi but starting s
-    }
-
-    function togglePass(inputId, btn) {
-      const input = document.getElementById(inputId);
-      const show = input.type === "password";
-      input.type = show ? "text" : "password";
-      btn.style.color = show ? "var(--accent)" : "";
-    }
-
-    function getUsers() {
-      try { return JSON.parse(localStorage.getItem(USERS_KEY)) || {}; }
-      catch { return {}; }
-    }
-
-    function saveUsers(users) {
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
-    }
-
-    function handleLogin() {
-      const user = document.getElementById("login-user").value.trim();
-      const pass = document.getElementById("login-pass").value;
-
-      if (!user || !pass) { showError("login-error", "Please fill in all fields."); return; }
-
-      const users = getUsers();
-      if (!users[user]) { showError("login-error", "Username not found."); return; }
-      if (users[user].password !== btoa(pass)) { showError("login-error", "Incorrect password."); return; }
-
-
-      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: user }));
-
-      const redirect = new URLSearchParams(window.location.search).get("next") || "index.html";
-      window.location.href = redirect;
-    }
-
-
-    function handleRegister() {
-      const user  = document.getElementById("reg-user").value.trim();
-      const pass  = document.getElementById("reg-pass").value;
-      const pass2 = document.getElementById("reg-pass2").value;
-
-      if (!user || !pass || !pass2) { showError("reg-error", "Please fill in all fields."); return; }
-      if (user.length < 3) { showError("reg-error", "Username must be at least 3 characters."); return; }
-      if (pass.length < 6) { showError("reg-error", "Password must be at least 6 characters."); return; }
-      if (pass !== pass2) { showError("reg-error", "Passwords do not match."); return; }
-
-      const users = getUsers();
-      if (users[user]) { showError("reg-error", "Username already taken."); return; }
-
-      users[user] = { password: btoa(pass), joined: new Date().toISOString() };
-      saveUsers(users);
-
-      localStorage.setItem(SESSION_KEY, JSON.stringify({ username: user }));
-
-      const redirect = new URLSearchParams(window.location.search).get("next") || "index.html";
-      window.location.href = redirect;
-    }
-
-    document.addEventListener("keydown", e => {
-      if (e.key !== "Enter") return;
-      const loginVisible = !document.getElementById("panel-login").classList.contains("hidden");
-      loginVisible ? handleLogin() : handleRegister();
-    });
   </script>
 </body>
 </html>

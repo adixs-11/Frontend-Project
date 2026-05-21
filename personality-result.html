@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizHive — Your Personality</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="result.css">
+  <style>
+    .personality-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 48px 40px 40px;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .personality-container::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--accent);
+    }
+
+    body.light .personality-container { box-shadow: 0 16px 48px rgba(28,43,58,0.1); }
+    body.light .personality-container::before { background: #1C2B3A; }
+
+    .personality-type {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.15;
+      margin: 16px 0 8px;
+      letter-spacing: -0.5px;
+    }
+
+    body.light .personality-type { color: #1C2B3A; }
+
+    .personality-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .personality-desc {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-style: italic;
+      color: var(--text-body);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .traits-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .trait-pill {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim, rgba(212,175,90,0.10));
+      border: 1px solid var(--border-accent);
+      border-radius: 3px;
+      padding: 5px 12px;
+    }
+
+    body.light .trait-pill {
+      color: #1C2B3A;
+      background: rgba(28,43,58,0.06);
+      border-color: #2C4258;
+    }
+
+    .strength-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+
+    .strength-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .strength-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--text-head);
+      line-height: 1.55;
+    }
+
+    .result-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="js/auth.js"></script>
+  <div class="noise"></div>
+
+  <nav class="navbar">
+    <a href="categories.html" class="back-btn"><span class="back-arrow">←</span> Back</a>
+    <div class="logo-center">QuizHive</div>
+    <div class="nav-placeholder"></div>
+  </nav>
+
+  <main class="result-wrapper">
+    <div class="personality-container">
+
+      <div class="result-eyebrow">Personality Complete</div>
+
+      <div class="personality-type" id="personalityType">—</div>
+      <div class="personality-subtitle" id="personalitySubtitle"></div>
+
+      <p class="personality-desc" id="personalityDesc"></p>
+
+      <div class="traits-row" id="traitsRow"></div>
+
+      <div class="strength-block">
+        <div class="strength-label">Your Core Strength</div>
+        <div class="strength-text" id="coreStrength"></div>
+      </div>
+
+      <div class="result-rule"></div>
+
+      <div class="result-actions">
+        <a href="categories.html" class="btn-primary">Play Again →</a>
+        <a href="leaderboard.html" class="btn-ghost">Leaderboard</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-logo">QuizHive</span>
+      <span class="footer-dot">◆</span>
+      <span>© 2026 • Know yourself</span>
+    </div>
+  </footer>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    let tags = [];
+    try {
+      tags = JSON.parse(decodeURIComponent(params.get('tags') || '[]'));
+    } catch(e) { tags = []; }
+
+
+    const freq = {};
+    tags.forEach(t => { if(t) freq[t] = (freq[t] || 0) + 1; });
+
+    const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]);
+    const topTags = sorted.slice(0, 5).map(e => e[0]);
+
+
+    const profiles = {
+
+      extrovert:    { name: "The Energiser",    desc: "You light up every room you walk into. People are your fuel — you think out loud, connect fast, and bring energy wherever you go. At your best, you're magnetic, warm, and the reason others feel included.", strength: "You make people feel seen and energised. In moments of silence, you're the one who speaks first — and says exactly the right thing.", traits: ["Outgoing", "Warm", "Spontaneous", "Social"] },
+      introvert:    { name: "The Deep Thinker", desc: "You live richly in your inner world. You observe before you act, choose your words carefully, and form bonds that are few but extraordinarily deep. Your reflective nature gives you a rare kind of clarity.", strength: "You notice what others miss. Your quiet presence is far more powerful than it looks — people trust you precisely because you don't perform.", traits: ["Reflective", "Loyal", "Perceptive", "Thoughtful"] },
+      ambivert:     { name: "The Chameleon",    desc: "You're rare — genuinely comfortable in solitude and in crowds. You adapt to what the moment needs, choosing connection when it matters and quiet when it counts. This social fluency is your secret weapon.", strength: "You bridge worlds. You're equally at home in a boardroom pitch or a quiet one-on-one, and people from all walks of life feel understood by you.", traits: ["Adaptable", "Balanced", "Empathetic", "Versatile"] },
+ 
+      thinker:      { name: "The Strategist",   desc: "You approach the world like a chess player — three moves ahead. Logic is your compass, and you're rarely rattled by emotion when clarity is needed. Your decisions hold up under scrutiny.", strength: "In chaos, you are the calm. You can untangle complexity that makes others freeze, and your clear thinking earns lasting respect.", traits: ["Analytical", "Precise", "Calm", "Rational"] },
+      empath:       { name: "The Feeler",        desc: "You experience the world through emotion — yours and everyone else's. Your emotional intelligence is extraordinary; you sense undercurrents in a room before anyone speaks. This sensitivity is not weakness — it is a form of genius.", strength: "You make people feel genuinely understood in a world where most feel invisible. That is a rare and profound gift.", traits: ["Empathetic", "Compassionate", "Intuitive", "Warm"] },
+
+      achiever:     { name: "The Trailblazer",  desc: "You are relentlessly driven by growth. Standing still feels like moving backwards to you. You set ambitious targets, pursue them with discipline, and have little patience for excuses — including your own.", strength: "You execute. While others plan endlessly, you're already three steps in. Your results speak before you do.", traits: ["Driven", "Disciplined", "Ambitious", "Focused"] },
+      creator:      { name: "The Visionary",    desc: "The world as it is bores you — you're too busy imagining the world as it could be. You think in colour, metaphor, and possibility. Your imagination doesn't just dream; it builds.", strength: "You see solutions no one else considered and beauty no one else noticed. Innovation follows you naturally.", traits: ["Creative", "Original", "Imaginative", "Curious"] },
+      caregiver:    { name: "The Anchor",        desc: "You show up. Consistently, reliably, fully. The people in your life know — without question — that you are in their corner. Your capacity for care is quiet but immense, and it holds the world together.", strength: "You are the reason people feel safe. Your presence is a gift that others only fully appreciate in hindsight.", traits: ["Nurturing", "Loyal", "Dependable", "Generous"] },
+  
+      leader:       { name: "The Commander",    desc: "You move people. Whether through confidence, vision, or sheer presence, others naturally align around you. You don't wait to be chosen — you step forward because the situation calls for it.", strength: "You give others direction when they're lost and clarity when everything feels uncertain. Leadership is your natural frequency.", traits: ["Decisive", "Visionary", "Bold", "Inspiring"] },
+      planner:      { name: "The Architect",    desc: "You are the person who makes things actually happen. While others improvise, you build systems, timelines, and contingencies. Chaos doesn't unsettle you — it just means you haven't made a plan yet.", strength: "Your preparation turns ambitious dreams into executable reality. Nothing falls through the cracks when you're involved.", traits: ["Organised", "Thorough", "Reliable", "Detail-Oriented"] },
+      adventurer:   { name: "The Explorer",     desc: "Comfort zones are simply starting points to you. You embrace uncertainty, thrive on novelty, and make decisions your cautious peers would never dare. Life, for you, is best lived at the edge.", strength: "You discover things — places, ideas, people — that play-it-safe types never find. Boldness is your compass.", traits: ["Courageous", "Curious", "Spontaneous", "Free"] },
+      free_spirit:  { name: "The Free Spirit",  desc: "Authentic is your only setting. You resist conformity not out of rebellion, but because anything less than genuine feels hollow. You follow your own rhythm and inspire others to do the same.", strength: "You give others permission to be themselves simply by being unapologetically you.", traits: ["Authentic", "Independent", "Open", "Spirited"] },
+    };
+
+  
+    function getProfile(tags) {
+      const order = ['extrovert','introvert','ambivert','empath','thinker','achiever','creator','caregiver','leader','planner','adventurer'];
+      for(const t of tags) {
+        const key = t.replace('-','_').replace(' ','-');
+        if(profiles[t]) return profiles[t];
+        if(profiles[key]) return profiles[key];
+      }
+      return {
+        name: "The Original",
+        desc: "You defy easy categorisation — and that is perhaps your most defining quality. You carry contradictions gracefully, shift between modes effortlessly, and bring a perspective that is entirely your own.",
+        strength: "Unpredictability is your edge. Just when people think they have you figured out, you surprise them — in the best possible way.",
+        traits: ["Complex", "Unique", "Genuine", "Surprising"]
+      };
+    }
+
+    const profile = getProfile(topTags);
+
+    document.getElementById('personalityType').textContent = profile.name;
+    document.getElementById('personalitySubtitle').textContent = 'Your Personality Type';
+    document.getElementById('personalityDesc').textContent = profile.desc;
+    document.getElementById('coreStrength').textContent = profile.strength;
+
+    const traitsRow = document.getElementById('traitsRow');
+    profile.traits.forEach(trait => {
+      const pill = document.createElement('span');
+      pill.className = 'trait-pill';
+      pill.textContent = trait;
+      traitsRow.appendChild(pill);
+    });
+
+    const shown = new Set(profile.traits.map(t => t.toLowerCase()));
+    topTags.slice(0, 3).forEach(tag => {
+      const label = tag.charAt(0).toUpperCase() + tag.slice(1).replace('-', ' ');
+      if(!shown.has(label.toLowerCase()) && tag !== topTags[0]) {
+        const pill = document.createElement('span');
+        pill.className = 'trait-pill';
+        pill.textContent = label;
+        traitsRow.appendChild(pill);
+        shown.add(label.toLowerCase());
+      }
+    });
+  </script>
+
+  <script src="index.js"></script>
+</body>
+</html>
